@@ -1,77 +1,211 @@
 @charset "utf-8";
-
-h1, h2, h3, h4, h5, h6 {
-    -webkit-font-smoothing: antialiased;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -webkit-font-smoothing: antialiased;
 }
+
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
-	font-size: inherit;
+  font-size: inherit;
 }
+
 .shadow-demo {
-    background-color: #26a69a;
-    width: 100px;
-    height: 100px;
-    margin: 20px auto;
+  background-color: #26a69a;
+  width: 100px;
+  height: 100px;
+  margin: 20px auto;
 }
+
 h1.page-title {
-    font-weight: 500;
-    font-size: 2.3em;
-    text-align: center;
-    color: #29b6f6;
+  font-weight: 500;
+  font-size: 2.3em;
+  text-align: center;
+  color: #29b6f6;
 }
+
 .col.grid-example {
-    border: 1px solid #eee;
-    margin: 7px 0;
-    text-align: center;
-    line-height: 50px;
-    font-size: 28px;
-    background-color: tomato;
-    color: white;
-    padding: 0;
+  border: 1px solid #eee;
+  margin: 7px 0;
+  text-align: center;
+  line-height: 50px;
+  font-size: 28px;
+  background-color: tomato;
+  color: white;
+  padding: 0;
 }
+
 .collection .collection-item.avatar {
-    padding-right: 30px;
+  padding-right: 30px;
 }
+
 .last-post {
-    padding: 10px 0 15px;
+  padding: 10px 0 15px;
 }
+
 .last-post .collection .collection-item.avatar>.date-post {
-    position: absolute;
-    width: 54px;
-    height: 54px;
-    overflow: hidden;
-    left: 10px;
-    display: inline-block;
-    padding: 16px 0;
-    vertical-align: middle;
-    background: #0D5334;
-    color: #fff;
-    text-align: center;
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  overflow: hidden;
+  left: 10px;
+  display: inline-block;
+  padding: 16px 0;
+  vertical-align: middle;
+  background: #0D5334;
+  color: #fff;
+  text-align: center;
 }
+
 .txt-center {
-    text-align: center;
+  text-align: center;
 }
+
 .post-header h1.post-title {
-    color: #29b6f6;
-    font-size: 2.8em;
-    font-weight: 800;
+  color: #29b6f6;
+  font-size: 2.8em;
+  font-weight: 800;
 }
+
 .post-header time {
-    color: #cacaca;
-    font-size: 0.9em;
+  color: #cacaca;
+  font-size: 0.9em;
 }
+
 p.rss-subscribe {
-    margin: 0;
+  margin: 0;
 }
 
 .parallax-container {
-    height: "50%";
+  height: "50%";
 }
 
 .materialboxed {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.registro {
+  width: 280px;
+  height: 280px;
+  background-color: #83a60a;
+  text-align: center;
+  border-radius: 140px;
+  -moz-border-radius: 140px;
+  -webkit-border-radius: 140px;
+  padding-top: 45px;
+  line-height: 25px;
+  margin: auto;
+}
+
+.registro h1 {
+  font-size: 30px;
+  color: #fff;
+  text-decoration: underline;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    font-family: 'Roboto', sans-serif;
+    color: #000000;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  h1 {
+    font-size: 20px;
+  }
+  .col1 {
+    margin-top: 10px;
+  }
+  .col2 {
+    margin-top: 10px;
+  }
+  .col3 {
+    margin-top: 10px;
+  }
+  .padding20 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .filaexpo {
+    text-align: center;
+    margin-bottom: 0px;
+  }
+  .registro {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 18px;
+  }
+  .mapa {
+    z-index: 999;
+    position: relative;
+    background-image: url("../img/javadayperu/mobile.png");
+    background-size: 100% 100%;
+    width: 100%;
+    color: #fff;
+    margin-top: -10px;
+  }
+  .mapa h1 {
+    font-size: 20px;
+    color: #fff;
+    text-decoration: underline;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  #Mapa {
+    height: 240px;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    margin-top: 160px;
+    margin-left: -245px;
+  }
+  .lugar {
+    margin-top: 30px;
+    margin-left: 40px;
+  }
+}
+
+
+.boton {
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    color: #83a60a;
+    font-size: 20px;
+    font-weight: bold;
+    background: #fff;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+  }
+  
+  .boton:hover {
+    color: #fff;
+    background: #ccc;
+    text-decoration: none;
+  }
+  
+  #Mapa {
+    height: 380px;
+    width: 500px;
+    position: absolute;
+    z-index: 1;
+    left: 650px;
+}
+
+.charla{margin-bottom: 10px;}
+.mapa{z-index:999;position: relative;background-image: url("../images/javadayperu/desktop.png");width: 1001px; height: 406px; color:#fff;margin-top: -30px;}
+.mapa h1{font-size: 30px; color: #fff;text-decoration: underline;margin-bottom: 15px;font-weight: bold;}
+.lugar{margin-top: 80px; margin-left: 40px!important;}
+
+.titlejava{font-size: 30px; color: #83a60a;text-decoration: underline;margin-bottom: 15px;font-weight: bold;}
