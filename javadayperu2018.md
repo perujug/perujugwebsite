@@ -53,6 +53,11 @@ permalink: /perujavaday2018/
                 <b>ALEXIS LOPEZ</b><br/>
                 Java Champion / Colombia<br/>
             </div>
+            <div class="col s4">
+                <img src="/images/javadayperu/hilmer.jpg" th:src="@{/images/javadayperu/hilmer.jpg}"  alt=""/><br/>
+                <b>HILLMER CHONA</b><br/>
+                MEDELLÍN JUG - COLOMBIA<br/>
+            </div>
 
     </div>
 </div>
@@ -92,7 +97,7 @@ permalink: /perujavaday2018/
                 </div>
                 <div class="charla">
                     <b>11:15 am. a 12:00 pm.</b><br/>
-                    Como crear una operadora virtual de telefonía con Jorge Vargas.<br/>
+                    Usando Java EE para crear una operadora virtual de telefonía con Jorge Vargas.<br/>
                 </div>
                 <div class="charla">
                     <b>12:15 pm. a 13:00 pm.</b><br/>
