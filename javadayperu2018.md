@@ -61,6 +61,37 @@ permalink: /perujavaday2018/
 
     </div>
 </div>
+<div class="section">
+
+    <div class="row">
+            <div class="col s4">
+                <img src="/images/javadayperu/lucas.jpg" th:src="@{/images/javadayperu/lucas.jpg}"  alt=""/><br/>
+                <b>LUCAS OLMOS</b><br/>
+                Inkafarma / Argentina<br/>
+            </div>
+            <div class="col s4">
+                <img src="/images/javadayperu/joseflores.jpg" th:src="@{/images/javadayperu/joseflores.jpg}"  alt=""/><br/>
+                <b>JOSE FLORES</b><br/>
+                Intercorp Retail / Perú<br/>
+            </div>
+            <div class="col s4">
+                <img src="/images/javadayperu/miguelcordova.jpg" th:src="@{/images/javadayperu/miguelcordova.jpg}"  alt=""/><br/>
+                <b>EDGAR RIOS NAVARRO </b><br/>
+                Consultor Independiente / Perú<br/>
+            </div>
+
+    </div>
+</div>
+<div class="section">
+
+    <div class="row">
+            <div class="col s4">
+                <img src="/images/javadayperu/edgarriosnavarro.jpg" th:src="@{/images/javadayperu/edgarriosnavarro.jpg}"  alt=""/><br/>
+                <b>EDGAR RIOS NAVARRO </b><br/>
+                Consultor Independiente / Perú<br/>
+            </div>
+    </div>
+</div>
 
 <div class="divider"></div>
 
@@ -101,7 +132,7 @@ permalink: /perujavaday2018/
                 </div>
                 <div class="charla">
                     <b>12:15 pm. a 13:00 pm.</b><br/>
-                    Java 9, 10, 11 y mas ... con Hillmer Chona.<br/>
+                    Agilidad en los Micro-servicios... con Lucas Olmos y José Flores.<br/>
                 </div>
 
                 <div class="charla">
@@ -110,17 +141,26 @@ permalink: /perujavaday2018/
                 </div>
                 <div class="charla">
                     <b>14:15 pm. a 15:00 pm.</b><br/>
-                    Más allá de git add/commit/push con Alexis López.<br/>
+                    Java 9, 10, 11 y mas ... con Hillmer Chona.<br/>
                 </div>
                 <div class="charla">
                     <b>15:15 pm. a 16:00 pm.</b><br/>
-                    CI/CD for Spring Boot Applications with Jenkins con Eddu Melendez.<br/>
+                    Más allá de git add/commit/push con Alexis López.<br/>
                 </div>
                 <div class="charla">
                     <b>16:15 pm. en 17:00 pm.</b><br/>
+                    CI/CD for Spring Boot Applications with Jenkins con Eddu Melendez.<br/>
+                </div>
+                <div class="charla">
+                    <b>17:15 pm. en 18:00 pm.</b><br/>
                     Groovy: Casos de la vida Real con Edgar Rios Navarro <br/>
                 </div>
+                <div class="charla">
+                    <b>18:15 pm. en 19:00 pm.</b><br/>
+                    Vue.js para Desarrolladores Java con José Díaz <br/>
+                </div>
             </div>
+            
             <div class="col s6">
                 <div class="registro">
                     <h1>INSCRIPCIÓN</h1>
