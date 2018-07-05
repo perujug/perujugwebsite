@@ -16,7 +16,7 @@ permalink: /perujavaday2018/
         busca conectar a desarrolladores y empresas interesadas en las tecnologías alrededor de Java. <br/><br/>
         Contaremos con <b>Expositores de diferentes partes de América</b> que compartirán con nosotros los paradigmas y tecnologías que actualmente están marcando la pauta en el mercado y lo que se viene a futuro con respecto a Java y Jakarta EE.<br/><br/>
         Gracias a la visita de <b>JUG Leaders</b> y <b>Java Champion</b> de México, USA, Guatemala, Colombia y Perú, podremos tocar temas como <b>Micro-servicios, Serverless, Big Data, Cloud, Java, Jakarta EE, Programación Reactiva.</b><br/><br/>
-            
+
 </div>
 <div class="divider"></div>
 <div class="section">
@@ -76,7 +76,7 @@ permalink: /perujavaday2018/
             </div>
             <div class="col s4">
                 <img src="/images/javadayperu/miguelcordova.jpg" th:src="@{/images/javadayperu/miguelcordova.jpg}"  alt=""/><br/>
-                <b>EDGAR RIOS NAVARRO </b><br/>
+                <b>Miguel Cordova </b><br/>
                 Consultor Independiente / Perú<br/>
             </div>
 
@@ -160,7 +160,7 @@ permalink: /perujavaday2018/
                     Vue.js para Desarrolladores Java con José Díaz <br/>
                 </div>
             </div>
-            
+
             <div class="col s6">
                 <div class="registro">
                     <h1>INSCRIPCIÓN</h1>
@@ -173,7 +173,7 @@ permalink: /perujavaday2018/
                 <br/>
                 <h2 class="titlejava">SPONSORS</h2>
                 <img src="/images/javadayperu/sponsors.jpg" th:src="@{/images/javadayperu/sponsors.jpg}" alt="" width="100%"/>
-                
+
             </div>
 
     </div>
@@ -181,7 +181,7 @@ permalink: /perujavaday2018/
 
 <div class="section">
     <br/>
-    
+
     <a href="http://www.joedayz.pe" target="_blank"><img src="/images/javadayperu/footer.png"  th:src="@{/images/javadayperu/footer.png}" alt="" class="img-responsive"/></a>
 </div>
 
