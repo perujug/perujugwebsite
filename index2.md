@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Peru Java Day 2018
-permalink: /perujavaday2018/
+title: Java Day 2018
+permalink: /javaday/2018/
 ---
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArCETPtmpt7r3Dxb9FjN0zg1nIY-ejWyc"></script>
@@ -19,11 +19,11 @@ permalink: /perujavaday2018/
     <p><b>La Conferencia Java Day Peru 2018</b>
      busca conectar a desarrolladores y empresas interesadas en las tecnologías alrededor de Java.</p>
 
-      <p>Contaremos con<b>Expositores de diferentes partes de América</b>
+      <p>Contaremos con <b>Expositores de diferentes partes de América</b>
      que compartirán con nosotros los paradigmas y tecnologías que actualmente están marcando la pauta en el mercado y lo que se viene a futuro con respecto a Java y Jakarta EE.
      </p>
  
-     <p> Gracias a la visita de<b>JUG Leaders</b> y 
+     <p> Gracias a la visita de <b>JUG Leaders</b> y 
      <b>Java Champion</b>
     de México, USA, Guatemala, Colombia y Perú, podremos tocar temas como 
     <b>Micro-servicios, Serverless, Big Data, Cloud, Java, Jakarta EE, Programación Reactiva.</b></p>  
