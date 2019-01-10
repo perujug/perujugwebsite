@@ -16,6 +16,13 @@ permalink: /javaday/2019/
 </div>
 
 <div class="section">
+    <p><b>El 2019 se acerca y los JUGs de Latinoamérica</b> apoyados por <a href="https://twitter.com/EventosJEspanol" target="_black">@EventosJEspanol</a> presentarán 4 conferencias desde Abril hasta Julio.</p> 
+    <ul class="collection">
+      <li class="collection-item"><a href="http://es-conference.com‬" target="_blank">Mexico</a>, el 26 de Abril</li>
+      <li class="collection-item">‪<a href="https://jconfdominicana.org‬" target="_blank">Republica Dominicana</a>, el 29 de Junio</li>
+      <li class="collection-item">‪<a href="http://jconfcolombia.org‬" target="_blank">Colombia</a>, del 5 al 06 de Julio</li>
+      <li class="collection-item">‪Perú‬ (Más información en Enero 2019), el 13 de Julio</li>
+    </ul>
     <p><b>La Conferencia Java Day Peru 2019</b>
      busca conectar a desarrolladores y empresas interesadas en las tecnologías alrededor de Java.</p>
 
