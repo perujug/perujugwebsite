@@ -54,4 +54,10 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: _site
-
+      - name: FTP to Host
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.PERUJUG_FTP_CICD_SERVER }}
+          username: ${{ secrets.PERUJUG_FTP_CICD_USERNAME }}
+          password: ${{ secrets.PERUJUG_FTP_CICD_PASSWORD }}
+          dry-run: true
