@@ -57,5 +57,5 @@ jobs:
           server: ${{ secrets.PERUJUG_FTP_CICD_SERVER }}
           username: ${{ secrets.PERUJUG_FTP_CICD_USERNAME }}
           password: ${{ secrets.PERUJUG_FTP_CICD_PASSWORD }}
-          dry-run: true
+          dry-run: false
           local-dir: ./_site/
