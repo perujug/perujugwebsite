@@ -54,7 +54,7 @@ jobs:
       - name: FTP to Host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.PERUJUG_FTP_CICD_SERVER }}
+          server: ftp.perujug.org
           username: ${{ secrets.PERUJUG_FTP_CICD_USERNAME }}
           password: ${{ secrets.PERUJUG_FTP_CICD_PASSWORD }}
           dry-run: false
