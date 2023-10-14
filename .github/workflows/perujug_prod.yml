@@ -51,9 +51,6 @@ jobs:
         with:
           name: perujugwebsite
           path: _site
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: _site
       - name: FTP to Host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
