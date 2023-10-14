@@ -50,5 +50,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: perujugwebsite
+          path: _site
       - name: Display structure of downloaded files
         run: ls -R
+        working-directory: _site
+

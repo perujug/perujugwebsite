@@ -133,6 +133,7 @@ Temporary Items
 
 # Local History for Visual Studio Code
 .history/
+_site/
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
