@@ -6,14 +6,17 @@
 #      pantalla de "Pages". El CNAME lo administra el maintainer y NO se versiona
 #      como archivo en este repositorio.
 #
-# El workflow se dispara automaticamente con cada push a `main` y tambien puede
-# ejecutarse manualmente desde la pestana "Actions" via `workflow_dispatch`.
+# El workflow se dispara automaticamente con cada push a `main` o `master` y
+# tambien puede ejecutarse manualmente desde la pestana "Actions" via
+# `workflow_dispatch`. Se incluyen ambas ramas a proposito: el repositorio
+# usa `master` como rama por defecto historica, y se mantiene `main` para
+# soportar el rename a la convencion moderna sin tocar el workflow.
 
 name: Deploy a GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -41,6 +44,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Type and content check
+        run: npm run check
 
       - name: Build site
         run: npm run build
