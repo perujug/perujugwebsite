@@ -13,6 +13,10 @@ tags:
   - java-day
   - "2018"
 speakers:
+  - name: Miguel Cordova
+    role: Desarrollador
+    country: Peru
+    photo: /images/javadayperu/miguelcordova.jpg
   - name: Mark Heckler
     role: Pivotal
     country: USA
