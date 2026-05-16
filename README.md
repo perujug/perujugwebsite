@@ -151,25 +151,33 @@ Luego abre [http://localhost:4321](http://localhost:4321) en tu navegador.
 Toda contribucion es bienvenida. Para mantener el repositorio ordenado:
 
 1. Haz un **fork** del repositorio.
-2. Crea una **rama descriptiva** a partir de `main`, por ejemplo
-   `feat/nuevo-evento` o `fix/typo-home`.
+2. Crea una **rama descriptiva** a partir de la rama por defecto del
+   repositorio (actualmente `master`; el maintainer puede renombrarla a `main`
+   en cualquier momento sin romper el deploy, ver seccion "Despliegue"). Por
+   ejemplo `feat/nuevo-evento` o `fix/typo-home`.
 3. Escribe **commits descriptivos en espanol** usando prefijos convencionales
    (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `ci:`).
 4. Antes de abrir el PR, corre `npm run build` y `npm run check` para
    asegurarte de que el sitio compila y los schemas validan.
-5. Abre un **Pull Request** hacia `main` describiendo el cambio y vinculando
-   issues si corresponde.
+5. Abre un **Pull Request** hacia la rama por defecto describiendo el cambio
+   y vinculando issues si corresponde.
 
 Al participar, te comprometes a respetar nuestro
 [Codigo de Conducta](./CODE_OF_CONDUCT.md).
 
 ## Despliegue
 
-El despliegue es automatico mediante GitHub Actions. Cada push a la rama
-`main` dispara el workflow [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml),
-que construye el sitio (`npm run build`) y publica el contenido de `dist/` en
-GitHub Pages. El workflow tambien puede ejecutarse manualmente desde la pestana
-**Actions** del repositorio (`workflow_dispatch`).
+El despliegue es automatico mediante GitHub Actions. Cada push a las ramas
+`main` o `master` dispara el workflow [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml),
+que ejecuta `npm run check`, construye el sitio (`npm run build`) y publica el
+contenido de `dist/` en GitHub Pages. El workflow tambien puede ejecutarse
+manualmente desde la pestana **Actions** del repositorio (`workflow_dispatch`).
+
+> **Nota para el maintainer:** se incluyen ambas ramas (`main` y `master`) en
+> el trigger a proposito. La rama por defecto historica es `master`; cuando
+> decidas renombrar a `main` (Settings -> Branches -> Rename), el deploy seguira
+> funcionando sin tocar el workflow. Si prefieres simplificar, puedes editar
+> `branches:` en el yaml y dejar solo la rama elegida.
 
 Para que funcione, el repositorio debe tener Pages configurado en modo
 **GitHub Actions** (Settings -> Pages -> Source: "GitHub Actions"). El dominio
