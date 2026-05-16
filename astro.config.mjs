@@ -12,7 +12,11 @@ export default defineConfig({
   integrations: [
     tailwind({ applyBaseStyles: false }),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+      changefreq: 'weekly',
+      priority: 0.7,
+    }),
   ],
   // Mapeo de URLs Jekyll legacy a las nuevas rutas Astro
   redirects: {

@@ -43,7 +43,12 @@ const jsonLd: Record<string, unknown> = {
   location: {
     '@type': 'Place',
     name: event.data.location,
-    address: event.data.mapAddress ?? event.data.location,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: event.data.mapAddress ?? event.data.location,
+      addressLocality: 'Lima',
+      addressCountry: 'PE',
+    },
     ...(hasCoords && {
       geo: {
         '@type': 'GeoCoordinates',

@@ -3,8 +3,9 @@
  * Componente SEO reutilizable.
  *
  * Genera title, meta description, OpenGraph, Twitter Card, canonical,
- * link rel=alternate al RSS, favicons/manifest, y un JSON-LD por defecto
- * con la organizacion PeruJUG (override-able via prop `jsonLd`).
+ * link rel=alternate al RSS, favicons + manifest PWA y un JSON-LD por
+ * defecto (grafo WebSite + Organization) que cualquier pagina puede
+ * sobrescribir via el prop `jsonLd` (por ejemplo BlogPosting o Event).
  */
 export interface Props {
   title: string;
@@ -28,20 +29,42 @@ const siteUrl = Astro.site ?? new URL('https://perujug.org');
 const canonicalUrl = new URL(canonical?.toString() ?? Astro.url.pathname, siteUrl);
 const imageUrl = new URL(image, siteUrl);
 
+/**
+ * JSON-LD por defecto: grafo WebSite + Organization para que el home y las
+ * paginas estaticas (equipo, acerca, listados) emitan los marcados claves.
+ * `sameAs` incluye Facebook, Twitter, Meetup y GitHub de la organizacion.
+ */
+const organizationId = new URL('/#organization', siteUrl).toString();
+const websiteId = new URL('/#website', siteUrl).toString();
+
 const defaultJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'PeruJUG',
-  alternateName: 'Peru Java User Group',
-  url: siteUrl.toString(),
-  logo: new URL('/images/logo.png', siteUrl).toString(),
-  description:
-    'Comunidad peruana de desarrolladores Java. Organizamos meetups, talleres y la conferencia anual JConf Peru.',
-  sameAs: [
-    'https://www.facebook.com/groups/perujug',
-    'https://twitter.com/perujug',
-    'https://www.meetup.com/Peru-Java-User-Group/',
-    'https://jconfperu.org/',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: 'PeruJUG',
+      alternateName: 'Peru Java User Group',
+      url: siteUrl.toString(),
+      logo: new URL('/images/logo.png', siteUrl).toString(),
+      description:
+        'Comunidad peruana de desarrolladores Java. Organizamos meetups, talleres y la conferencia Java Day Peru.',
+      sameAs: [
+        'https://www.facebook.com/groups/perujug',
+        'https://twitter.com/perujug',
+        'https://www.meetup.com/Peru-Java-User-Group/',
+        'https://github.com/perujug',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: siteUrl.toString(),
+      name: 'PeruJUG',
+      description: 'Comunidad Peru Java User Group',
+      inLanguage: 'es-PE',
+      publisher: { '@id': organizationId },
+    },
   ],
 };
 
@@ -50,13 +73,15 @@ const jsonLdPayload = jsonLd ?? defaultJsonLd;
 
 <title>{title}</title>
 <meta name="description" content={description} />
+<meta name="theme-color" content="#D91023" />
 <link rel="canonical" href={canonicalUrl.toString()} />
 
-{/* Favicons + manifest */}
+{/* Favicons + manifest PWA */}
 <link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 
 {/* RSS */}
 <link
