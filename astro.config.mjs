@@ -18,5 +18,7 @@ export default defineConfig({
   redirects: {
     '/2016/05/20/welcome-to-peruJUG.html': '/blog/welcome-to-perujug/',
     '/2018/06/30/java-day-2018.html': '/blog/java-day-2018/',
+    '/javaday/2018/': '/eventos/javaday-2018/',
+    '/javaday/2019/': '/eventos/javaday-2019/',
   },
 });

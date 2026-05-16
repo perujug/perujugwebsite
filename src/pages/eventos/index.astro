@@ -1,0 +1,105 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { formatDateLong } from '@/utils/dates';
+
+const all = await getCollection('eventos');
+
+const upcoming = all
+  .filter((e: CollectionEntry<'eventos'>) => e.data.status === 'upcoming')
+  .sort((a: CollectionEntry<'eventos'>, b: CollectionEntry<'eventos'>) => a.data.date.getTime() - b.data.date.getTime());
+
+const past = all
+  .filter((e: CollectionEntry<'eventos'>) => e.data.status === 'past')
+  .sort((a: CollectionEntry<'eventos'>, b: CollectionEntry<'eventos'>) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout
+  title="Eventos | PeruJUG"
+  description="Eventos proximos y pasados de la comunidad PeruJUG, incluyendo el Java Day Peru."
+>
+  <section class="container-prose max-w-5xl py-16">
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Eventos</h1>
+    <p class="mt-3 max-w-2xl text-lg text-[var(--color-fg-muted)]">
+      Conferencias, meetups y talleres organizados por la comunidad PeruJUG.
+    </p>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold tracking-tight">Proximos eventos</h2>
+      {
+        upcoming.length === 0 ? (
+          <p class="mt-4 text-[var(--color-fg-muted)]">
+            Aun no hay eventos confirmados. Siguenos en Meetup para enterarte primero.
+          </p>
+        ) : (
+          <ul class="mt-6 grid gap-6 md:grid-cols-2">
+            {upcoming.map((event: CollectionEntry<'eventos'>) => (
+              <li class="flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6">
+                <time
+                  datetime={event.data.date.toISOString()}
+                  class="text-xs uppercase tracking-wider text-[var(--color-accent)]"
+                >
+                  {formatDateLong(event.data.date)}
+                </time>
+                <h3 class="mt-2 text-xl font-semibold">
+                  <a href={`/eventos/${event.slug}/`} class="hover:text-[var(--color-link-hover)]">
+                    {event.data.title}
+                  </a>
+                </h3>
+                <p class="mt-2 text-sm text-[var(--color-fg-muted)]">{event.data.location}</p>
+                <p class="mt-2 flex-1 text-sm text-[var(--color-fg-muted)]">
+                  {event.data.description}
+                </p>
+                <a
+                  href={`/eventos/${event.slug}/`}
+                  class="mt-4 text-sm font-semibold hover:text-[var(--color-link-hover)]"
+                >
+                  Ver detalles &rarr;
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold tracking-tight">Eventos pasados</h2>
+      {
+        past.length === 0 ? (
+          <p class="mt-4 text-[var(--color-fg-muted)]">
+            Aun no hay registros de eventos pasados en el sitio.
+          </p>
+        ) : (
+          <ul class="mt-6 grid gap-6 md:grid-cols-2">
+            {past.map((event: CollectionEntry<'eventos'>) => (
+              <li class="flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6">
+                <time
+                  datetime={event.data.date.toISOString()}
+                  class="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]"
+                >
+                  {formatDateLong(event.data.date)}
+                </time>
+                <h3 class="mt-2 text-xl font-semibold">
+                  <a href={`/eventos/${event.slug}/`} class="hover:text-[var(--color-link-hover)]">
+                    {event.data.title}
+                  </a>
+                </h3>
+                <p class="mt-2 text-sm text-[var(--color-fg-muted)]">{event.data.location}</p>
+                <p class="mt-2 flex-1 text-sm text-[var(--color-fg-muted)]">
+                  {event.data.description}
+                </p>
+                <a
+                  href={`/eventos/${event.slug}/`}
+                  class="mt-4 text-sm font-semibold hover:text-[var(--color-link-hover)]"
+                >
+                  Ver detalles &rarr;
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+  </section>
+</BaseLayout>
