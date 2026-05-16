@@ -28,6 +28,24 @@ const navItems = [
   { href: '/acerca/', label: 'Acerca de' },
 ];
 
+/**
+ * Devuelve true si el item de nav corresponde a la pagina actual.
+ * Tolera trailing slash y considera "Inicio" activo solo en la home exacta;
+ * el resto de items se consideran activos cuando el pathname empieza con su
+ * href, asi `/blog/foo/` marca `Blog` como activo. Issue 5 del review v1.
+ */
+function isCurrent(itemHref: string, pathname: string): boolean {
+  const normalize = (p: string) => (p.endsWith('/') ? p : `${p}/`);
+  const current = normalize(pathname);
+  const target = normalize(itemHref);
+  if (target === '/') {
+    return current === '/';
+  }
+  return current === target || current.startsWith(target);
+}
+
+const currentPath = Astro.url.pathname;
+
 const socialLinks = [
   {
     href: 'https://www.facebook.com/groups/perujug',
@@ -120,14 +138,21 @@ const socialLinks = [
           class="hidden items-center gap-6 md:flex"
         >
           {
-            navItems.map((item) => (
-              <a
-                href={item.href}
-                class="text-sm font-medium hover:text-[var(--color-link-hover)]"
-              >
-                {item.label}
-              </a>
-            ))
+            navItems.map((item) => {
+              const active = isCurrent(item.href, currentPath);
+              return (
+                <a
+                  href={item.href}
+                  aria-current={active ? 'page' : undefined}
+                  class:list={[
+                    'text-sm font-medium hover:text-[var(--color-link-hover)]',
+                    active && 'text-[var(--color-accent)] underline underline-offset-4 decoration-2',
+                  ]}
+                >
+                  {item.label}
+                </a>
+              );
+            })
           }
           <button
             type="button"
@@ -184,16 +209,23 @@ const socialLinks = [
       >
         <ul class="container-prose flex flex-col gap-1 py-3 max-w-6xl">
           {
-            navItems.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-[var(--color-bg-elevated)]"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))
+            navItems.map((item) => {
+              const active = isCurrent(item.href, currentPath);
+              return (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={active ? 'page' : undefined}
+                    class:list={[
+                      'block rounded-md px-3 py-2 text-sm font-medium hover:bg-[var(--color-bg-elevated)]',
+                      active && 'bg-[var(--color-bg-elevated)] text-[var(--color-accent)]',
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })
           }
         </ul>
       </nav>
