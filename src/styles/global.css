@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Variables CSS para tematizacion light/dark.
+ * El toggle del header escribe `localStorage.theme` y aplica/remueve `.dark` en <html>.
+ */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-elevated: #f7f7f8;
+  --color-fg: #111827;
+  --color-fg-muted: #4b5563;
+  --color-border: #e5e7eb;
+  --color-accent: #d91023;
+  --color-accent-fg: #ffffff;
+  --color-link: #5382a1;
+  --color-link-hover: #d91023;
+}
+
+.dark {
+  --color-bg: #0b0f17;
+  --color-bg-elevated: #111827;
+  --color-fg: #f3f4f6;
+  --color-fg-muted: #9ca3af;
+  --color-border: #1f2937;
+  --color-accent: #f89820;
+  --color-accent-fg: #0b0f17;
+  --color-link: #f89820;
+  --color-link-hover: #ffffff;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: theme('fontFamily.sans');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: var(--color-link);
+  }
+
+  a:hover {
+    color: var(--color-link-hover);
+  }
+
+  /* Foco accesible WCAG AA */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Respetar usuarios que prefieren menos movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-prose {
+    @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8;
+  }
+}

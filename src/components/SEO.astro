@@ -1,0 +1,90 @@
+---
+/**
+ * Componente SEO reutilizable.
+ *
+ * Genera title, meta description, OpenGraph, Twitter Card, canonical,
+ * link rel=alternate al RSS, favicons/manifest, y un JSON-LD por defecto
+ * con la organizacion PeruJUG (override-able via prop `jsonLd`).
+ */
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonical?: string | URL;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  image = '/images/logo.png',
+  canonical,
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://perujug.org');
+const canonicalUrl = new URL(canonical?.toString() ?? Astro.url.pathname, siteUrl);
+const imageUrl = new URL(image, siteUrl);
+
+const defaultJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'PeruJUG',
+  alternateName: 'Peru Java User Group',
+  url: siteUrl.toString(),
+  logo: new URL('/images/logo.png', siteUrl).toString(),
+  description:
+    'Comunidad peruana de desarrolladores Java. Organizamos meetups, talleres y la conferencia anual JConf Peru.',
+  sameAs: [
+    'https://www.facebook.com/groups/perujug',
+    'https://twitter.com/perujug',
+    'https://www.meetup.com/Peru-Java-User-Group/',
+    'https://jconfperu.org/',
+  ],
+};
+
+const jsonLdPayload = jsonLd ?? defaultJsonLd;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl.toString()} />
+
+{/* Favicons + manifest */}
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+
+{/* RSS */}
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="/rss.xml"
+  title="PeruJUG Blog"
+/>
+
+{/* OpenGraph */}
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl.toString()} />
+<meta property="og:image" content={imageUrl.toString()} />
+<meta property="og:site_name" content="PeruJUG" />
+<meta property="og:locale" content="es_PE" />
+
+{/* Twitter Card */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@perujug" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl.toString()} />
+
+{/* JSON-LD */}
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(jsonLdPayload)}
+/>

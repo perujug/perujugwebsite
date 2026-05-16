@@ -1,0 +1,315 @@
+---
+import '@/styles/global.css';
+import SEO from '@/components/SEO.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonical?: string | URL;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  image,
+  canonical,
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+
+const navItems = [
+  { href: '/', label: 'Inicio' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/eventos/', label: 'Eventos' },
+  { href: '/equipo/', label: 'Equipo' },
+  { href: '/acerca-de/', label: 'Acerca de' },
+];
+
+const socialLinks = [
+  {
+    href: 'https://www.facebook.com/groups/perujug',
+    label: 'Facebook',
+  },
+  {
+    href: 'https://twitter.com/perujug',
+    label: 'Twitter / X',
+  },
+  {
+    href: 'https://www.meetup.com/Peru-Java-User-Group/',
+    label: 'Meetup',
+  },
+  {
+    href: 'https://jconfperu.org/',
+    label: 'JConf Peru',
+  },
+  {
+    href: '/rss.xml',
+    label: 'RSS',
+  },
+];
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    {/* Aplicar el tema antes del primer paint para evitar flash. */}
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = stored ?? (prefersDark ? 'dark' : 'light');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (_err) {
+          /* localStorage podria estar bloqueado; ignorar. */
+        }
+      })();
+    </script>
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      canonical={canonical}
+      type={type}
+      jsonLd={jsonLd}
+    />
+    <slot name="head" />
+  </head>
+  <body class="flex min-h-screen flex-col bg-[var(--color-bg)] text-[var(--color-fg)]">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-peru-red focus:px-4 focus:py-2 focus:text-white"
+    >
+      Saltar al contenido
+    </a>
+
+    <header
+      class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur supports-[backdrop-filter]:bg-[var(--color-bg)]/75"
+    >
+      <div class="container-prose flex h-16 items-center justify-between gap-4 max-w-6xl">
+        <a
+          href="/"
+          class="flex items-center gap-2 text-lg font-bold tracking-tight"
+          aria-label="PeruJUG - Inicio"
+        >
+          <img
+            src="/images/logo.png"
+            alt=""
+            width="32"
+            height="32"
+            class="h-8 w-8"
+            loading="eager"
+            decoding="async"
+          />
+          <span>PeruJUG</span>
+        </a>
+
+        <nav
+          id="primary-nav"
+          aria-label="Navegacion principal"
+          class="hidden items-center gap-6 md:flex"
+        >
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class="text-sm font-medium hover:text-[var(--color-link-hover)]"
+              >
+                {item.label}
+              </a>
+            ))
+          }
+          <button
+            type="button"
+            id="theme-toggle"
+            aria-label="Cambiar tema"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] hover:bg-[var(--color-bg-elevated)]"
+          >
+            <span aria-hidden="true" data-theme-icon-light>☀️</span>
+            <span aria-hidden="true" data-theme-icon-dark class="hidden">🌙</span>
+          </button>
+        </nav>
+
+        <div class="flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            id="theme-toggle-mobile"
+            aria-label="Cambiar tema"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)]"
+          >
+            <span aria-hidden="true" data-theme-icon-light>☀️</span>
+            <span aria-hidden="true" data-theme-icon-dark class="hidden">🌙</span>
+          </button>
+          <button
+            type="button"
+            id="nav-toggle"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+              aria-hidden="true"
+            >
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <nav
+        id="mobile-nav"
+        aria-label="Navegacion movil"
+        class="hidden border-t border-[var(--color-border)] md:hidden"
+      >
+        <ul class="container-prose flex flex-col gap-1 py-3 max-w-6xl">
+          {
+            navItems.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-[var(--color-bg-elevated)]"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+
+    <main id="contenido" class="flex-1">
+      <slot />
+    </main>
+
+    <footer
+      class="mt-16 border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+    >
+      <div class="container-prose flex flex-col gap-6 py-10 max-w-6xl md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="text-sm font-semibold">PeruJUG</p>
+          <p class="text-sm text-[var(--color-fg-muted)]">
+            Comunidad peruana de desarrolladores Java.
+          </p>
+          <p class="mt-2 text-xs text-[var(--color-fg-muted)]">
+            &copy; {new Date().getFullYear()} PeruJUG. Contenido bajo licencia abierta.
+          </p>
+        </div>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {
+            socialLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  class="hover:text-[var(--color-link-hover)]"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </footer>
+
+    <script>
+      // Toggle dark/light + menu hamburguesa accesible.
+      const root = document.documentElement;
+
+      function applyTheme(theme: 'light' | 'dark') {
+        if (theme === 'dark') {
+          root.classList.add('dark');
+        } else {
+          root.classList.remove('dark');
+        }
+        try {
+          localStorage.setItem('theme', theme);
+        } catch (_err) {
+          /* noop */
+        }
+        syncIcons();
+      }
+
+      function currentTheme(): 'light' | 'dark' {
+        return root.classList.contains('dark') ? 'dark' : 'light';
+      }
+
+      function syncIcons() {
+        const isDark = currentTheme() === 'dark';
+        document.querySelectorAll<HTMLElement>('[data-theme-icon-light]').forEach((el) => {
+          el.classList.toggle('hidden', isDark);
+        });
+        document.querySelectorAll<HTMLElement>('[data-theme-icon-dark]').forEach((el) => {
+          el.classList.toggle('hidden', !isDark);
+        });
+      }
+
+      function toggleTheme() {
+        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      }
+
+      ['theme-toggle', 'theme-toggle-mobile'].forEach((id) => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.addEventListener('click', toggleTheme);
+        }
+      });
+
+      syncIcons();
+
+      const navToggle = document.getElementById('nav-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      if (navToggle && mobileNav) {
+        navToggle.addEventListener('click', () => {
+          const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+          const next = !expanded;
+          navToggle.setAttribute('aria-expanded', String(next));
+          navToggle.setAttribute('aria-label', next ? 'Cerrar menu' : 'Abrir menu');
+          mobileNav.classList.toggle('hidden', !next);
+        });
+
+        // Cerrar el menu movil al navegar a un enlace.
+        mobileNav.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navToggle.setAttribute('aria-label', 'Abrir menu');
+            mobileNav.classList.add('hidden');
+          });
+        });
+
+        // Cerrar con Escape.
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navToggle.setAttribute('aria-label', 'Abrir menu');
+            mobileNav.classList.add('hidden');
+            navToggle.focus();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
