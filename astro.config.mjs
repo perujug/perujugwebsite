@@ -7,6 +7,32 @@ import { fileURLToPath } from 'node:url';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
+// Mapeo de URLs Jekyll legacy a las nuevas rutas Astro.
+//
+// Astro materializa cada entrada como `dist/<from>/index.html`. Para los
+// redirects de posts cuya URL canonica termina en `.html` SIN slash, la
+// integracion `flattenLegacyHtmlRedirects` (abajo) aplana esa carpeta a un
+// archivo plano `dist/<from>` post-build. Ver issue 1 y 3 del review v1.
+//
+// Esta es la UNICA fuente de verdad de los redirects legacy: la integracion
+// deriva sus targets filtrando por `.html` para evitar el acoplamiento que
+// exigia mantener dos listas sincronizadas (review v2, issue 1).
+/** @type {Record<string, string>} */
+const LEGACY_REDIRECTS = {
+  '/2016/05/20/welcome-to-peruJUG.html': '/blog/welcome-to-perujug/',
+  '/2018/06/30/java-day-2018.html': '/blog/java-day-2018/',
+  '/javaday/2018/': '/eventos/javaday-2018/',
+  '/javaday/2019/': '/eventos/javaday-2019/',
+};
+
+// Paths legacy `.html` cuyo casing original mezcla mayusculas y minusculas.
+// Para cada uno, la integracion clona ademas una variante toLowerCase() del
+// archivo emitido, tolerando backlinks que normalicen casing (GitHub Pages
+// es case-sensitive).
+const LOWERCASE_CLONE_PATHS = new Set([
+  '/2016/05/20/welcome-to-peruJUG.html',
+]);
+
 /**
  * Integracion ad-hoc que aplana los redirects legacy `*.html` que Astro
  * materializa como `dist/<path>.html/index.html` (carpeta), moviendolos a
@@ -23,14 +49,21 @@ import path from 'node:path';
  *     `dist/**\/*.html` plano, y elimina la carpeta original.
  *   - Adicionalmente clona la version en minusculas del slug `peruJUG`
  *     (`peruJUG.html` -> tambien `perujug.html`) para tolerar backlinks que
- *     normalicen el casing, ya que GitHub Pages es case-sensitive.
+ *     normalicen el casing.
+ *
+ * Targets derivados de `LEGACY_REDIRECTS` (review v2, issue 1): cualquier
+ * redirect cuyo `from` termina en `.html` se procesa automaticamente; no
+ * hay arrays paralelos que mantener sincronizados.
  */
 function flattenLegacyHtmlRedirects() {
-  /** @type {Array<{from: string; lowercase?: boolean}>} */
-  const targets = [
-    { from: '2016/05/20/welcome-to-peruJUG.html', lowercase: true },
-    { from: '2018/06/30/java-day-2018.html' },
-  ];
+  /** @type {Array<{from: string; lowercase: boolean}>} */
+  const targets = Object.keys(LEGACY_REDIRECTS)
+    .filter((from) => from.endsWith('.html'))
+    .map((from) => ({
+      // Normalizar a path relativo (sin slash inicial) para `path.join`.
+      from: from.replace(/^\//, ''),
+      lowercase: LOWERCASE_CLONE_PATHS.has(from),
+    }));
 
   return {
     name: 'perujug:flatten-legacy-html-redirects',
@@ -56,11 +89,34 @@ function flattenLegacyHtmlRedirects() {
           logger.info(`Aplanado redirect legacy: /${from}`);
 
           if (lowercase) {
-            const lowerPath = path.join(distRoot, from.toLowerCase());
-            // Solo escribir la variante en minusculas si no existiria una
-            // colision con un archivo distinto ya emitido.
-            await fs.writeFile(lowerPath, html, 'utf8');
-            logger.info(`Clonado redirect (lowercase): /${from.toLowerCase()}`);
+            const fromLower = from.toLowerCase();
+            const lowerPath = path.join(distRoot, fromLower);
+            // Solo escribir la variante en minusculas si no existe ya un
+            // archivo distinto en esa ruta (review v2, issue 2). En el
+            // estado actual no hay colision, pero el guard protege a
+            // mantenedores futuros que agreguen redirects con casing
+            // similar.
+            try {
+              await fs.access(lowerPath);
+              logger.warn(
+                `Clon lowercase omitido por colision existente: /${fromLower}`
+              );
+              continue;
+            } catch {
+              // No existe, podemos escribir el clon.
+            }
+            // Reescribir el body del meta-refresh para que el "Redirecting
+            // from <code>...</code>" muestre la URL realmente solicitada
+            // en la variante lowercase, no la original camelCase (review
+            // v2, issue 3).
+            const fromBasename = path.basename(from);
+            const fromLowerBasename = path.basename(fromLower);
+            const lowerHtml =
+              fromBasename === fromLowerBasename
+                ? html
+                : html.replaceAll(fromBasename, fromLowerBasename);
+            await fs.writeFile(lowerPath, lowerHtml, 'utf8');
+            logger.info(`Clonado redirect (lowercase): /${fromLower}`);
           }
         }
       },
@@ -83,16 +139,5 @@ export default defineConfig({
     }),
     flattenLegacyHtmlRedirects(),
   ],
-  // Mapeo de URLs Jekyll legacy a las nuevas rutas Astro.
-  //
-  // Astro materializa cada entrada como `dist/<from>/index.html`. Para los
-  // redirects de posts cuya URL canonica termina en `.html` SIN slash, la
-  // integracion `flattenLegacyHtmlRedirects` (arriba) aplana esa carpeta a
-  // un archivo plano `dist/<from>` post-build. Ver issue 1 y 3 del review v1.
-  redirects: {
-    '/2016/05/20/welcome-to-peruJUG.html': '/blog/welcome-to-perujug/',
-    '/2018/06/30/java-day-2018.html': '/blog/java-day-2018/',
-    '/javaday/2018/': '/eventos/javaday-2018/',
-    '/javaday/2019/': '/eventos/javaday-2019/',
-  },
+  redirects: LEGACY_REDIRECTS,
 });
