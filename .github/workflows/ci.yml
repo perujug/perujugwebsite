@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.21.0
+          cache: npm
+
+      - name: Scan tracked files for secrets
+        run: node scripts/check-secrets.mjs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type and content check
+        run: npm run check
+
+      - name: Build site
+        run: npm run build
+
+      - name: Validate internal links
+        run: npm run check:links

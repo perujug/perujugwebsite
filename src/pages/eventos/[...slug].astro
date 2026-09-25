@@ -1,0 +1,237 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { formatDateLong } from '@/utils/dates';
+
+export async function getStaticPaths() {
+  const events = await getCollection('eventos');
+  return events.map((event: CollectionEntry<'eventos'>) => ({
+    params: { slug: event.id },
+    props: { event },
+  }));
+}
+
+interface Props {
+  event: CollectionEntry<'eventos'>;
+}
+
+const { event } = Astro.props;
+const { Content } = await render(event);
+
+type Speaker = CollectionEntry<'eventos'>['data']['speakers'][number];
+type AgendaItem = CollectionEntry<'eventos'>['data']['agenda'][number];
+type Sponsor = CollectionEntry<'eventos'>['data']['sponsors'][number];
+
+const siteUrl = Astro.site ?? new URL('https://perujug.org');
+const canonical = new URL(`/eventos/${event.id}/`, siteUrl).toString();
+const hasCoords =
+  typeof event.data.latitude === 'number' && typeof event.data.longitude === 'number';
+const mapsUrl = hasCoords
+  ? `https://www.google.com/maps/search/?api=1&query=${event.data.latitude},${event.data.longitude}`
+  : null;
+
+const isUpcoming = event.data.status === 'upcoming';
+
+const jsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: event.data.title,
+  description: event.data.description,
+  startDate: event.data.date.toISOString(),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: event.data.location,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: event.data.mapAddress ?? event.data.location,
+      addressLocality: 'Lima',
+      addressCountry: 'PE',
+    },
+    ...(hasCoords && {
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: event.data.latitude,
+        longitude: event.data.longitude,
+      },
+    }),
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'PeruJUG',
+    url: siteUrl.toString(),
+  },
+  ...(event.data.image && {
+    image: new URL(event.data.image.src, siteUrl).toString(),
+  }),
+  inLanguage: 'es-PE',
+};
+---
+
+<BaseLayout
+  title={`${event.data.title} | PeruJUG`}
+  description={event.data.description}
+  image={event.data.image?.src}
+  canonical={canonical}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="container-prose max-w-5xl py-16">
+    <p class="text-sm uppercase tracking-wider text-[var(--color-fg-muted)]">
+      <a href="/eventos/" class="hover:text-[var(--color-link-hover)]">&larr; Ver todos los eventos</a>
+    </p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">{event.data.title}</h1>
+    <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--color-fg-muted)]">
+      <time datetime={event.data.date.toISOString()}>{formatDateLong(event.data.date)}</time>
+      <span aria-hidden="true">&middot;</span>
+      <span>{event.data.location}</span>
+      {
+        isUpcoming ? (
+          <span class="rounded-full bg-[var(--color-accent)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-fg)]">
+            Próximo evento
+          </span>
+        ) : (
+          <span class="rounded-full border border-[var(--color-border)] px-3 py-1 text-xs">
+            Evento pasado
+          </span>
+        )
+      }
+    </div>
+
+    {
+      event.data.image && (
+        <img
+          src={event.data.image.src}
+          alt={event.data.image.alt}
+          class="mt-8 w-full rounded-lg border border-[var(--color-border)] object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      )
+    }
+
+    <div class="prose prose-neutral mt-10 max-w-none dark:prose-invert">
+      <Content />
+    </div>
+
+    {
+      isUpcoming && event.data.registrationUrl && (
+        <div class="mt-10">
+          <a
+            href={event.data.registrationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-md bg-peru-red px-6 py-3 text-sm font-semibold text-white shadow hover:bg-[var(--color-link-hover)]"
+          >
+            Registrarme
+          </a>
+        </div>
+      )
+    }
+
+    {
+      event.data.speakers.length > 0 && (
+        <section class="mt-16">
+          <h2 class="text-2xl font-bold tracking-tight">Expositores</h2>
+          <ul class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {event.data.speakers.map((speaker: Speaker) => (
+              <li class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6 text-center">
+                <img
+                  src={speaker.photo}
+                  alt={`Foto de ${speaker.name}`}
+                  width="128"
+                  height="128"
+                  loading="lazy"
+                  decoding="async"
+                  class="mx-auto h-32 w-32 rounded-full object-cover"
+                />
+                <h3 class="mt-4 text-base font-semibold">{speaker.name}</h3>
+                <p class="mt-1 text-sm text-[var(--color-fg-muted)]">{speaker.role}</p>
+                <p class="mt-1 text-xs uppercase tracking-wider text-[var(--color-fg-muted)]">
+                  {speaker.country}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      event.data.agenda.length > 0 && (
+        <section class="mt-16">
+          <h2 class="text-2xl font-bold tracking-tight">Agenda</h2>
+          <ol class="mt-6 divide-y divide-[var(--color-border)] rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+            {event.data.agenda.map((item: AgendaItem) => (
+              <li class="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-baseline sm:gap-6">
+                <span class="w-32 shrink-0 font-mono text-sm text-[var(--color-accent)]">
+                  {item.time}
+                </span>
+                <div class="flex-1">
+                  <p class="font-semibold">{item.title}</p>
+                  {item.speaker && (
+                    <p class="text-sm text-[var(--color-fg-muted)]">{item.speaker}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {
+      event.data.sponsors.length > 0 && (
+        <section class="mt-16">
+          <h2 class="text-2xl font-bold tracking-tight">Sponsors</h2>
+          <ul class="mt-6 flex flex-wrap items-center gap-6">
+            {event.data.sponsors.map((s: Sponsor) =>
+              s.url ? (
+                <li>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm font-semibold hover:text-[var(--color-link-hover)]"
+                  >
+                    {s.logo ? (
+                      <img src={s.logo} alt={s.name} class="h-12 w-auto" loading="lazy" />
+                    ) : (
+                      s.name
+                    )}
+                  </a>
+                </li>
+              ) : (
+                <li class="text-sm font-semibold">
+                  {s.logo ? (
+                    <img src={s.logo} alt={s.name} class="h-12 w-auto" loading="lazy" />
+                  ) : (
+                    s.name
+                  )}
+                </li>
+              ),
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold tracking-tight">Lugar</h2>
+      <p class="mt-3 text-[var(--color-fg-muted)]">{event.data.location}</p>
+      {
+        mapsUrl && (
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-4 inline-flex items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-2 text-sm font-semibold hover:border-[var(--color-link-hover)]"
+          >
+            Ver en Google Maps &rarr;
+          </a>
+        )
+      }
+    </section>
+  </article>
+</BaseLayout>
