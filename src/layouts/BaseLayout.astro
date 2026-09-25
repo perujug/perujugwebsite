@@ -134,7 +134,7 @@ const socialLinks = [
 
         <nav
           id="primary-nav"
-          aria-label="Navegacion principal"
+          aria-label="Navegación principal"
           class="hidden items-center gap-6 md:flex"
         >
           {
@@ -178,7 +178,7 @@ const socialLinks = [
           <button
             type="button"
             id="nav-toggle"
-            aria-label="Abrir menu"
+            aria-label="Abrir menú"
             aria-expanded="false"
             aria-controls="mobile-nav"
             class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)]"
@@ -204,7 +204,7 @@ const socialLinks = [
 
       <nav
         id="mobile-nav"
-        aria-label="Navegacion movil"
+        aria-label="Navegación movil"
         class="hidden border-t border-[var(--color-border)] md:hidden"
       >
         <ul class="container-prose flex flex-col gap-1 py-3 max-w-6xl">
@@ -268,7 +268,7 @@ const socialLinks = [
     </footer>
 
     <script>
-      // Toggle dark/light + menu hamburguesa accesible.
+      // Toggle dark/light + menú hamburguesa accesible.
       const root = document.documentElement;
 
       function applyTheme(theme: 'light' | 'dark') {
@@ -319,15 +319,15 @@ const socialLinks = [
           const expanded = navToggle.getAttribute('aria-expanded') === 'true';
           const next = !expanded;
           navToggle.setAttribute('aria-expanded', String(next));
-          navToggle.setAttribute('aria-label', next ? 'Cerrar menu' : 'Abrir menu');
+          navToggle.setAttribute('aria-label', next ? 'Cerrar menú' : 'Abrir menú');
           mobileNav.classList.toggle('hidden', !next);
         });
 
-        // Cerrar el menu movil al navegar a un enlace.
+        // Cerrar el menú movil al navegar a un enlace.
         mobileNav.querySelectorAll('a').forEach((link) => {
           link.addEventListener('click', () => {
             navToggle.setAttribute('aria-expanded', 'false');
-            navToggle.setAttribute('aria-label', 'Abrir menu');
+            navToggle.setAttribute('aria-label', 'Abrir menú');
             mobileNav.classList.add('hidden');
           });
         });
@@ -336,7 +336,7 @@ const socialLinks = [
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
             navToggle.setAttribute('aria-expanded', 'false');
-            navToggle.setAttribute('aria-label', 'Abrir menu');
+            navToggle.setAttribute('aria-label', 'Abrir menú');
             mobileNav.classList.add('hidden');
             navToggle.focus();
           }

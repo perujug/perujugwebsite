@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { formatDateLong } from '@/utils/dates';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }: CollectionEntry<'blog'>) => !data.draft);
   return posts.map((post: CollectionEntry<'blog'>) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }));
 }
@@ -16,10 +16,10 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 const siteUrl = Astro.site ?? new URL('https://perujug.org');
-const canonical = new URL(`/blog/${post.slug}/`, siteUrl).toString();
+const canonical = new URL(`/blog/${post.id}/`, siteUrl).toString();
 const imageUrl = post.data.image
   ? new URL(post.data.image.src, siteUrl).toString()
   : new URL('/images/logo.png', siteUrl).toString();
@@ -99,7 +99,7 @@ const jsonLd = {
         href="/blog/"
         class="inline-flex items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-2 text-sm font-semibold hover:border-[var(--color-link-hover)]"
       >
-        &larr; Ver mas publicaciones
+        &larr; Ver más publicaciones
       </a>
     </div>
   </article>

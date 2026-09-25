@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { formatDateLong } from '@/utils/dates';
 
 export async function getStaticPaths() {
   const events = await getCollection('eventos');
   return events.map((event: CollectionEntry<'eventos'>) => ({
-    params: { slug: event.slug },
+    params: { slug: event.id },
     props: { event },
   }));
 }
@@ -16,14 +16,14 @@ interface Props {
 }
 
 const { event } = Astro.props;
-const { Content } = await event.render();
+const { Content } = await render(event);
 
 type Speaker = CollectionEntry<'eventos'>['data']['speakers'][number];
 type AgendaItem = CollectionEntry<'eventos'>['data']['agenda'][number];
 type Sponsor = CollectionEntry<'eventos'>['data']['sponsors'][number];
 
 const siteUrl = Astro.site ?? new URL('https://perujug.org');
-const canonical = new URL(`/eventos/${event.slug}/`, siteUrl).toString();
+const canonical = new URL(`/eventos/${event.id}/`, siteUrl).toString();
 const hasCoords =
   typeof event.data.latitude === 'number' && typeof event.data.longitude === 'number';
 const mapsUrl = hasCoords
@@ -89,7 +89,7 @@ const jsonLd: Record<string, unknown> = {
       {
         isUpcoming ? (
           <span class="rounded-full bg-[var(--color-accent)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-fg)]">
-            Proximo evento
+            Próximo evento
           </span>
         ) : (
           <span class="rounded-full border border-[var(--color-border)] px-3 py-1 text-xs">

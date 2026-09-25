@@ -1,8 +1,8 @@
 ---
 title: "Java Day Peru 2018"
-description: "Conferencia Java Day Peru 2018 con expositores de USA, Mexico, Colombia, Argentina y Peru."
+description: "Conferencia Java Day Peru 2018 con expositores de USA, México, Colombia, Argentina y Perú."
 date: 2018-06-30
-location: "Auditorio de la FISI, Universidad Nacional Mayor de San Marcos, Lima, Peru"
+location: "Auditorio de la FISI, Universidad Nacional Mayor de San Marcos, Lima, Perú"
 latitude: -12.053155
 longitude: -77.085546
 status: past
@@ -15,7 +15,7 @@ tags:
 speakers:
   - name: Miguel Cordova
     role: Desarrollador
-    country: Peru
+    country: Perú
     photo: /images/javadayperu/miguelcordova.jpg
   - name: Mark Heckler
     role: Pivotal
@@ -23,15 +23,15 @@ speakers:
     photo: /images/javadayperu/markheckler.jpg
   - name: Jorge Vargas
     role: Java Champion
-    country: Mexico
+    country: México
     photo: /images/javadayperu/expo2.jpg
   - name: Jose Diaz
     role: JUG Leader
-    country: Peru
+    country: Perú
     photo: /images/javadayperu/expo4.jpg
   - name: Eddu Melendez
     role: JUG Co-Leader
-    country: Peru
+    country: Perú
     photo: /images/javadayperu/eddu.jpg
   - name: Alexis Lopez
     role: Java Champion
@@ -47,11 +47,11 @@ speakers:
     photo: /images/javadayperu/lucas.jpg
   - name: Jose Flores
     role: Intercorp Retail
-    country: Peru
+    country: Perú
     photo: /images/javadayperu/joseflores.jpg
   - name: Edgar Rios Navarro
     role: Consultor Independiente
-    country: Peru
+    country: Perú
     photo: /images/javadayperu/edgarriosnavarro.jpg
 agenda:
   - time: "9:00 - 9:15"
@@ -63,18 +63,18 @@ agenda:
     title: "Full-stack Reactive Java con Project Reactor y Spring Boot 2"
     speaker: Mark Heckler
   - time: "11:15 - 12:00"
-    title: "Usando Java EE para crear una operadora virtual de telefonia"
+    title: "Usando Java EE para crear una operadora virtual de telefonía"
     speaker: Jorge Vargas
   - time: "12:15 - 13:00"
-    title: "Agilidad en los micro-servicios"
+    title: "Agilidad en los microservicios"
     speaker: Lucas Olmos y Jose Flores
   - time: "13:00 - 14:00"
     title: Almuerzo
   - time: "14:15 - 15:00"
-    title: "Java 9, 10, 11 y mas"
+    title: "Java 9, 10, 11 y más"
     speaker: Hillmer Chona
   - time: "15:15 - 16:00"
-    title: "Mas alla de git add/commit/push"
+    title: "Más allá de git add/commit/push"
     speaker: Alexis Lopez
   - time: "16:15 - 17:00"
     title: "CI/CD para aplicaciones Spring Boot con Jenkins"
@@ -87,8 +87,8 @@ agenda:
     speaker: Jose Diaz
 ---
 
-La Conferencia Java Day Peru 2018 conecto a desarrolladores y empresas interesadas en las tecnologias alrededor de Java. Contamos con expositores de diferentes partes de America que compartieron los paradigmas y tecnologias que estaban marcando la pauta en el mercado, asi como lo que vendria a futuro con Java y Jakarta EE.
+La Conferencia Java Day Peru 2018 conectó a desarrolladores y empresas interesadas en las tecnologías alrededor de Java. Contamos con expositores de diferentes partes de América que compartieron los paradigmas y tecnologías que estaban marcando la pauta en el mercado, así como lo que vendría a futuro con Java y Jakarta EE.
 
-Gracias a la visita de **JUG Leaders** y **Java Champions** de Mexico, USA, Colombia, Argentina y Peru, se discutieron temas como microservicios, serverless, Big Data, Cloud, Java, Jakarta EE y programacion reactiva.
+Gracias a la visita de **JUG Leaders** y **Java Champions** de México, USA, Colombia, Argentina y Perú, se discutieron temas como microservicios, serverless, Big Data, Cloud, Java, Jakarta EE y programación reactiva.
 
-El evento se realizo el sabado 30 de junio de 2018, de 9:00 a 19:00, en el Auditorio de la FISI de la Universidad Nacional Mayor de San Marcos, en Lima.
+El evento se realizó el sábado 30 de junio de 2018, de 9:00 a 19:00, en el Auditorio de la FISI de la Universidad Nacional Mayor de San Marcos, en Lima.

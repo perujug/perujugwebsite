@@ -16,7 +16,7 @@ const past = all
 
 <BaseLayout
   title="Eventos | PeruJUG"
-  description="Eventos proximos y pasados de la comunidad PeruJUG, incluyendo el Java Day Peru."
+  description="Eventos próximos y pasados de la comunidad PeruJUG, incluyendo el Java Day Peru."
 >
   <section class="container-prose max-w-5xl py-16">
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Eventos</h1>
@@ -25,11 +25,11 @@ const past = all
     </p>
 
     <section class="mt-12">
-      <h2 class="text-2xl font-bold tracking-tight">Proximos eventos</h2>
+      <h2 class="text-2xl font-bold tracking-tight">Próximos eventos</h2>
       {
         upcoming.length === 0 ? (
           <p class="mt-4 text-[var(--color-fg-muted)]">
-            Aun no hay eventos confirmados. Siguenos en Meetup para enterarte primero.
+            Aún no hay eventos confirmados. Síguenos en Meetup para enterarte primero.
           </p>
         ) : (
           <ul class="mt-6 grid gap-6 md:grid-cols-2">
@@ -42,7 +42,7 @@ const past = all
                   {formatDateLong(event.data.date)}
                 </time>
                 <h3 class="mt-2 text-xl font-semibold">
-                  <a href={`/eventos/${event.slug}/`} class="hover:text-[var(--color-link-hover)]">
+                  <a href={`/eventos/${event.id}/`} class="hover:text-[var(--color-link-hover)]">
                     {event.data.title}
                   </a>
                 </h3>
@@ -51,7 +51,7 @@ const past = all
                   {event.data.description}
                 </p>
                 <a
-                  href={`/eventos/${event.slug}/`}
+                  href={`/eventos/${event.id}/`}
                   class="mt-4 text-sm font-semibold hover:text-[var(--color-link-hover)]"
                 >
                   Ver detalles &rarr;
@@ -68,7 +68,7 @@ const past = all
       {
         past.length === 0 ? (
           <p class="mt-4 text-[var(--color-fg-muted)]">
-            Aun no hay registros de eventos pasados en el sitio.
+            Aún no hay registros de eventos pasados en el sitio.
           </p>
         ) : (
           <ul class="mt-6 grid gap-6 md:grid-cols-2">
@@ -81,7 +81,7 @@ const past = all
                   {formatDateLong(event.data.date)}
                 </time>
                 <h3 class="mt-2 text-xl font-semibold">
-                  <a href={`/eventos/${event.slug}/`} class="hover:text-[var(--color-link-hover)]">
+                  <a href={`/eventos/${event.id}/`} class="hover:text-[var(--color-link-hover)]">
                     {event.data.title}
                   </a>
                 </h3>
@@ -90,7 +90,7 @@ const past = all
                   {event.data.description}
                 </p>
                 <a
-                  href={`/eventos/${event.slug}/`}
+                  href={`/eventos/${event.id}/`}
                   class="mt-4 text-sm font-semibold hover:text-[var(--color-link-hover)]"
                 >
                   Ver detalles &rarr;

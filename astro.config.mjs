@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
-import tailwind from '@astrojs/tailwind';
 import { fileURLToPath } from 'node:url';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -45,8 +44,8 @@ const LOWERCASE_CLONE_PATHS = new Set([
  *     una carpeta con `index.html` para cada redirect declarado, formato que
  *     GitHub Pages solo sirve cuando el cliente solicita la URL CON slash.
  *   - Esta integracion ejecuta en `astro:build:done`: detecta los redirects
- *     en `dist/**\/*.html\/index.html`, lee el HTML, lo escribe en
- *     `dist/**\/*.html` plano, y elimina la carpeta original.
+ *     en las carpetas `dist/<ruta>.html/index.html`, lee el HTML, lo escribe
+ *     como `dist/<ruta>.html` plano, y elimina la carpeta original.
  *   - Adicionalmente clona la version en minusculas del slug `peruJUG`
  *     (`peruJUG.html` -> tambien `perujug.html`) para tolerar backlinks que
  *     normalicen el casing.
@@ -130,7 +129,6 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [
-    tailwind({ applyBaseStyles: false }),
     mdx(),
     sitemap({
       filter: (page) => !page.includes('/404'),

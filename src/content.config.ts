@@ -1,4 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
+import { glob } from 'astro/loaders';
 
 /**
  * Schemas Zod para las content collections del sitio PeruJUG.
@@ -13,7 +15,7 @@ const imageObject = z.object({
 });
 
 const blog = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -52,7 +54,7 @@ const sponsor = z.object({
 });
 
 const eventos = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/eventos' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

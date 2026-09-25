@@ -14,13 +14,13 @@ export async function GET(context) {
 
   return rss({
     title: 'PeruJUG Blog',
-    description: 'Novedades de la comunidad Peru Java User Group',
+    description: 'Novedades de la comunidad PeruJUG',
     site: context.site ?? 'https://perujug.org',
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      link: `/blog/${post.slug}/`,
+      link: `/blog/${post.id}/`,
       categories: post.data.tags ?? [],
     })),
     customData: '<language>es-PE</language>',

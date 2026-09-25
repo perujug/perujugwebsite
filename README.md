@@ -12,8 +12,8 @@ comunidad y dar visibilidad al ecosistema Java en el pais.
 
 ## Stack tecnologico
 
-- [Astro 5](https://astro.build) como framework de sitio estatico.
-- [Tailwind CSS 3](https://tailwindcss.com) para los estilos.
+- [Astro 7](https://astro.build) como framework de sitio estatico.
+- [Tailwind CSS 3](https://tailwindcss.com) para los estilos, integrado mediante PostCSS.
 - [TypeScript](https://www.typescriptlang.org) para schemas de contenido y tipos.
 - [Content Collections](https://docs.astro.build/en/guides/content-collections/)
   de Astro para blog y eventos (Markdown con front-matter validado por Zod).
@@ -22,9 +22,10 @@ comunidad y dar visibilidad al ecosistema Java en el pais.
 
 ## Requisitos
 
-- [Node.js](https://nodejs.org) **20 o superior**.
+- [Node.js](https://nodejs.org) **24 LTS**. La version exacta esta declarada
+  en `.mise.toml`; si usas [mise](https://mise.jdx.dev), ejecuta `mise install`.
 - npm (incluido con Node). El proyecto usa `npm`; no mezcles `pnpm` ni `yarn`
-  para mantener consistencia con el workflow de CI (`npm ci`).
+  para mantener consistencia con CI (`npm ci`).
 
 ## Como correr el proyecto localmente
 
@@ -33,8 +34,9 @@ comunidad y dar visibilidad al ecosistema Java en el pais.
 git clone https://github.com/perujug/perujugwebsite.git
 cd perujugwebsite
 
-# 2. Instalar dependencias
-npm install
+# 2. Instalar el runtime declarado (si usas mise) y las dependencias
+mise install
+npm ci
 
 # 3. Levantar el servidor de desarrollo
 npm run dev
@@ -82,7 +84,7 @@ Luego abre [http://localhost:4321](http://localhost:4321) en tu navegador.
 1. Crea un nuevo archivo Markdown en `src/content/blog/<slug>.md`. El `<slug>`
    se convertira en la URL final: `/blog/<slug>/`.
 2. Agrega el front-matter siguiendo el schema definido en
-   [`src/content/config.ts`](./src/content/config.ts):
+   [`src/content.config.ts`](./src/content.config.ts):
 
    ```markdown
    ---
@@ -108,7 +110,7 @@ Luego abre [http://localhost:4321](http://localhost:4321) en tu navegador.
 
 1. Crea un archivo en `src/content/eventos/<slug>.md`. La URL sera
    `/eventos/<slug>/`.
-2. Usa el siguiente ejemplo como base (ver schema en `src/content/config.ts`):
+2. Usa el siguiente ejemplo como base (ver schema en `src/content.config.ts`):
 
    ```markdown
    ---

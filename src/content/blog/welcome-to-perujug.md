@@ -7,4 +7,4 @@ tags:
   - anuncio
 ---
 
-Esta es una version temprana del sitio web de PeruJUG, que iremos mejorando con el tiempo. Te damos la bienvenida a la comunidad peruana de desarrolladores Java.
+Esta es una versión temprana del sitio web de PeruJUG, que iremos mejorando con el tiempo. Te damos la bienvenida a la comunidad peruana de desarrolladores Java.
